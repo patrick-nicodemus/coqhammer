@@ -6,7 +6,8 @@
 (* This file may be distributed under the terms of the LGPL 2.1 license. *)
 (* Fragments of this file are based on the "crush" tactic of Adam Chlipala. *)
 
-Require List Arith ZArith Bool.
+From Stdlib Require Import Lists.List.
+From Stdlib Require Arith ZArith Bool.
 
 Inductive ReconstrT : Set := Empty : ReconstrT | AllHyps : ReconstrT.
 

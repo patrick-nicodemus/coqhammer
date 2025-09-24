@@ -1,5 +1,5 @@
 From Hammer Require Import Tactics.
-Require List Arith ZArith Bool.
+From Stdlib Require List Arith ZArith Bool.
 
 Global Hint Rewrite -> Arith.PeanoNat.Nat.add_0_r : shints.
 Global Hint Rewrite -> Arith.PeanoNat.Nat.add_1_r : shints.
