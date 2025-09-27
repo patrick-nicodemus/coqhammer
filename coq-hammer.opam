@@ -21,7 +21,7 @@ install: [
 ]
 depends: [
   "ocaml" {>= "4.09.0"}
-  "coq" {= "dev"}
+  ("coq" {= "dev"} | "rocq-prover")
   ("conf-g++" {build} | "conf-clang" {build})
   "coq-hammer-tactics" {= version}
 ]
