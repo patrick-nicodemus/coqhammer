@@ -191,7 +191,13 @@ END
 
 TACTIC EXTEND Hammer_hauto
 | [ "hauto" sauto_opts(l) ] -> {
-  try_usolve (hauto_s_opts ()) l sauto "hauto failed"
+    Proofview.with_shelf begin
+      interp_opts (hauto_s_opts ()) l 
+        sauto
+    end
+    >>=
+    (fun _-> Proofview.tclUNIT ())
+
 }
 END
 

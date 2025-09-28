@@ -1105,6 +1105,18 @@ let create_tactics opts = {
 
 (*****************************************************************************************)
 
+
+let print_actions opts =
+  Proofview.Goal.enter begin fun gl ->
+    let goal = Proofview.Goal.concl gl in
+    let evd = Proofview.Goal.sigma gl in
+    let hyps = List.map (eval_hyp evd) (Utils.get_hyps gl) in
+    let actions = create_actions true opts evd goal hyps gl in
+    print_search_actions actions;
+    Tacticals.tclIDTAC
+  end
+
+
 let rec search extra tacs opts n rtrace visited =
   if n = 0 then
     Tacticals.tclSOLVE [ tacs.t_finish; opts.s_solve_tac ]
@@ -1132,6 +1144,7 @@ let rec search extra tacs opts n rtrace visited =
     end
 
 and start_search tacs opts n =
+  print_actions opts <*>
   tacs.t_unfolding <*> tacs.t_simplify <*>
     if opts.s_sapply && not tacs.b_sapply_initialised then
       Proofview.Goal.enter begin fun gl ->
@@ -1346,15 +1359,6 @@ let strivial opts =
     else
       Utils.ltac_apply "Tactics.isolve_nolia" []
 
-let print_actions opts =
-  Proofview.Goal.enter begin fun gl ->
-    let goal = Proofview.Goal.concl gl in
-    let evd = Proofview.Goal.sigma gl in
-    let hyps = List.map (eval_hyp evd) (Utils.get_hyps gl) in
-    let actions = create_actions true opts evd goal hyps gl in
-    print_search_actions actions;
-    Tacticals.tclIDTAC
-  end
 
 let unshelve tac =
   Proofview.with_shelf tac >>=

@@ -491,7 +491,8 @@ Lemma vars_transl : forall (t : Term) (n : nat), HasVar n t <-> HasVar n (transl
 Proof.
   induction t; qsimpl.
   - hauto using vars_abstr.
-  - hauto use: @no_lams_transl, @vars_abstr, @novar_abstr, @hs_lem.
+  - Set Debug "backtrace".
+    hauto use: @no_lams_transl, @vars_abstr, @novar_abstr, @hs_lem.
 Qed.
 
 Notation "X @ Y" := (LApp X Y) (at level 11, left associativity).
